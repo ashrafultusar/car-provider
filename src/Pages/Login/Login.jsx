@@ -1,11 +1,26 @@
+import { Link } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg'
+import { useContext } from 'react';
+import { AuthContext } from '../../Provider/Authprovider';
 
 const Login = () => {
 
+  const { signIn } = useContext(AuthContext);
+
+
     const handelLogin = e => {
         e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
 
-
+      
+      signIn(email, password)
+        .then(result => {
+          const user = result.user;
+          console.log(user)
+        })
+      .catch(error=>console.log(error))
 }
 
 
@@ -25,7 +40,7 @@ const Login = () => {
                 </label>
                 <input
                   type="email"
-                  placeholder="email"
+                  placeholder="email" name='email'
                   className="input input-bordered"
                   required
                 />
@@ -36,7 +51,7 @@ const Login = () => {
                 </label>
                 <input
                   type="password"
-                  placeholder="password"
+                  placeholder="password" name='password'
                   className="input input-bordered"
                   required
                 />
@@ -47,9 +62,16 @@ const Login = () => {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn w-full bg-[#FF3811]">Sign In</button>
+             
+                <input
+                  className="btn w-full bg-[#FF3811]"
+                  type="submit"
+                  value="Login"
+                />
               </div>
+              <p className='text-center pt-2'>New to Car Doctor <Link className='text-orange-500 font-semibold' to={'/signup'}>Sign Up</Link></p>
             </form>
+            
           </div>
         </div>
       </div>
