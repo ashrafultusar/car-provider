@@ -7,37 +7,43 @@ import CheckOut from "../Pages/CheckOut/CheckOut";
 import Bookings from "../Pages/Bookings/Bookings";
 import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
     children: [
       {
-        path: '/',
-        element: <Home></Home>
+        path: "/",
+        element: <Home></Home>,
       },
       {
-        path: '/login',
-        element: <Login></Login>
+        path: "/login",
+        element: <Login></Login>,
       },
       {
-        path: '/signup',
-        element: <SignUp></SignUp>
+        path: "/signup",
+        element: <SignUp></SignUp>,
       },
       {
-        path: '/checkout/:id',
-        element: <CheckOut></CheckOut>,
-        loader:({params})=> fetch(`http://localhost:5000/services/${params.id}`)
+        path: "/checkout/:id",
+        element: (
+          <PrivateRoutes>
+            <CheckOut></CheckOut>
+          </PrivateRoutes>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/services/${params.id}`),
       },
       {
-        path: '/bookings',
-        element: <PrivateRoutes><Bookings></Bookings></PrivateRoutes>
-          
-      
-      }
-      ]
-    },
+        path: "/bookings",
+        element: (
+          <PrivateRoutes>
+            <Bookings></Bookings>
+          </PrivateRoutes>
+        ),
+      },
+    ],
+  },
 ]);
-  
+
 export default router;

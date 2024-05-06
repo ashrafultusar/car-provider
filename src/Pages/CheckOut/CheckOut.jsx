@@ -7,6 +7,8 @@ const CheckOut = () => {
   const { title, _id ,price,img} = service;
   const { user } = useContext(AuthContext)
 
+  console.log(service)
+  
   const handelBookService = e => {
     e.preventDefault();
     const form = e.target;
