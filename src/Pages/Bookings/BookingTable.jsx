@@ -2,7 +2,8 @@ import React from 'react';
 
 const BookingTable = ({ booking,handelDelete,handelConfirm }) => {
     console.log(booking)
-    const {_id,customerName, email,date,service,price,img, status} = booking;
+  // const {_id,customerName, email,date,service,price,img, status} = booking;
+  console.log(booking)
 
  
 
