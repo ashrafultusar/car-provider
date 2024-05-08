@@ -10,11 +10,9 @@ const Bookings = () => {
   const url = `http://localhost:5000/bookings?email=${user?.email}`;
 
   useEffect(() => {
-   axios.get(url,{withCredentials: true})
-     .then(res => {
-       setBookings(res.data);
-   })
-   
+    axios.get(url, { withCredentials: true }).then((res) => {
+      setBookings(res.data);
+    });
   }, [url]);
 
   const handelDelete = (id) => {
@@ -35,28 +33,27 @@ const Bookings = () => {
     }
   };
 
-    const handelConfirm = id => {
-        fetch(`http://localhost:5000/bookings/${id}`,{
-            method: 'PATCH',
-            headers: {
-                'content-type':'application/json'
-            },
-            body: JSON.stringify({status:'confirm'})
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                if (data.modifiedCount > 0) {
-                    const remaining = bookings.filter(booking => booking._id !== id);
-                    const update = bookings.find(booking => booking._id === id);
-                    update.status = 'confirm'
-                    const newBooking = [update, ...remaining]
-                    setBookings(newBooking)
-                }
-        })
-    }
-    
-    
+  const handelConfirm = (id) => {
+    fetch(`http://localhost:5000/bookings/${id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ status: "confirm" }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          const remaining = bookings.filter((booking) => booking._id !== id);
+          const update = bookings.find((booking) => booking._id === id);
+          update.status = "confirm";
+          const newBooking = [update, ...remaining];
+          setBookings(newBooking);
+        }
+      });
+  };
+
   return (
     <div>
       <h1 className="text-5xl font-bold">Your Booking: {bookings.length}</h1>
@@ -83,7 +80,8 @@ const Bookings = () => {
                 <BookingTable
                   key={booking._id}
                   booking={booking}
-                  handelDelete={handelDelete} handelConfirm={handelConfirm}
+                  handelDelete={handelDelete}
+                  handelConfirm={handelConfirm}
                 ></BookingTable>
               ))}
             </tbody>
